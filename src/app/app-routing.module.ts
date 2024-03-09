@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
+import { RutasActivasGuard } from './service/rutas-activas.guard';
+
+
 const routes: Routes = [
   
   {
     path: '',
-    redirectTo: 'recetas',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
@@ -21,6 +24,20 @@ const routes: Routes = [
       }
     ]
 
+  },
+  {
+    path: 'home',
+    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule),
+    canActivate: [RutasActivasGuard]
+
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: 'signin',
+    loadChildren: () => import('./signin/signin.module').then( m => m.SigninPageModule)
   },
 
     

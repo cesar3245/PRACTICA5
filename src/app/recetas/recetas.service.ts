@@ -7,17 +7,42 @@ import { Observable } from 'rxjs';
 })
 export class RecetasService {
   private recetas: Receta[] = [
-    {
-      id: 'r1',
-      title: 'Schnitzel',
-      imageURL: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/2017-05-28_Wiener_Schnitzel_mit_Pommes_frites_anagoria.jpg/1920px-2017-05-28_Wiener_Schnitzel_mit_Pommes_frites_anagoria.jpg',
-      ingredientes: ['French Fries', 'Pork Chop', 'Salad']
+  {
+    id: 'r1',
+      title: 'Pollo frito',
+      imageURL: 'https://mojo.generalmills.com/api/public/content/1KOpdVP5O0Kp_H6eMW5aoA_gmi_hi_res_jpeg.jpeg?v=439e2431&t=16e3ce250f244648bef28c5949fb99ff',
+      ingredientes: ['1/2 litro de aceite de oliva',
+                     '200 gramos de harina',
+                     '100 gramos de maicena (harina de maíz refinada)',
+                     '1 cucharadita de pimentón dulce',
+                     '1 cucharadita de curry',
+                     '1 cucharadita de ajo en polvo',
+                     '1/2 cucharadita de cayena',
+                     '2 de tomillo',
+                     '2 de eneldo',
+                     '1 pizca de estragón',
+                     'agua',
+                     '200 gramos de harina',
+                     '1 cucharadita de pimentón dulce',
+                     '1/2 cucharadita de curry',
+                     '1/2 cucharadita de cayena',
+                     '1/2 cucharadita de ajo en polvo',
+                     '2 de tomillo',
+                     '2 de eneldo']
+     
+     
     },
     {
       id: 'r2',
-      title: 'Spaghetti',
-      imageURL: 'https://www.inspiredtaste.net/wp-content/uploads/2019/03/Spaghetti-with-Meat-Sauce-Recipe-1-1200.jpg',
-      ingredientes: ['Spaghetti', 'Meat', 'Tomatoes']
+      title: 'Espagueti rojo',
+      imageURL: 'https://www.recetasnestle.com.mx/sites/default/files/srh_recipes/7ea1f5dc22c500d98182bc418ae329d1.jpg',
+      ingredientes: ['1 1/2 Tazas de Puré de tomate natural', 
+                     '3/4 Taza de Agua',
+                     '1 1/2 Cubos de Concentrado de Tomate con Pollo CONSOMATE',
+                     '1 Lata de Media Crema NESTLÉ',
+                     '1 Paquete de Espagueti (200 g)',
+                     '1 Envase de Media Crema NESTLÉ® refrigerada (190 g)',
+                     '3 Ramitas de Perejil fresco desinfectado y picado finamente']
     }
   ]
 

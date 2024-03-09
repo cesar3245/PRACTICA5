@@ -17,6 +17,10 @@ export class RecetasPage implements OnInit {
   }
 
   ngOnInit() {
+    //this.recetas = this.recetaService.getAllRecetas();
+    //console.log(this.recetas);
+  }
+  ionViewWillEnter() {
     this.recetas = this.recetaService.getAllRecetas();
   }
 
