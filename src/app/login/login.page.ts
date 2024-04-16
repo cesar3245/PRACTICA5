@@ -4,6 +4,8 @@ import { User } from '../interface/user';
 import { AutenticacionFirebaseService } from '../service/autenticacion-firebase.service';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { MenuService } from '../service/menu.service';
+
 
 @Component({
   selector: 'app-login',
@@ -17,6 +19,7 @@ export class LoginPage implements OnInit {
   constructor(
     private router: Router,
     private autSvc: AutenticacionFirebaseService,
+    private menuService: MenuService,
     private alertCtrl: AlertController
 
   ) { }
@@ -28,7 +31,9 @@ export class LoginPage implements OnInit {
     this.autSvc.onLogin(this.user).then((user:any)=>{
       if(user!=null && user.code ==undefined){
         console.log('Successfully logged in!');
-        
+
+        this.menuService.setTitle("home");
+
         this.router.navigate(['/home']);
       }
       else{
