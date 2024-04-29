@@ -8,6 +8,8 @@ import { AlertController } from '@ionic/angular';
 
 
 import { User } from '../interface/user';
+import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
+import { MenuService } from '../service/menu.service';
 
 
 @Component({
@@ -16,21 +18,32 @@ import { User } from '../interface/user';
   styleUrls: ['./signin.page.scss'],
 })
 export class SigninPage implements OnInit {
+
   user: User = new User();
+  formRegister : any;
+
 
   constructor(
     private autSvc: AutenticacionFirebaseService,
     private router: Router,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private menuService: MenuService,
+    private formBuilder: FormBuilder
+
+
   ) { }
 
   ngOnInit() {
+    this.buildForm();
+
   }
 
   async onRegister(){
     this.autSvc.onRegister(this.user).then(user=>{
       if(user){
         console.log('Successfully created user!');
+        this.menuService.setTitle("login");
+
         this.router.navigate(['/login']);
       }
     }).catch(error=>{
@@ -41,8 +54,36 @@ export class SigninPage implements OnInit {
 
   }
   onLogin(){
+    this.menuService.setTitle("login");
     this.router.navigate(["/login"]);
   }
+
+  
+  buildForm(){
+    this.formRegister = this.formBuilder.group({
+      email: new FormControl('',{validators: [Validators.email,Validators.required]}),
+      password: new FormControl('', {validators: [Validators.required, Validators.minLength(6), Validators.maxLength(6)]})
+    });
+  }
+
+  submitForm(){
+    if(this.formRegister.valid){
+      this.user.email = this.formRegister.get('email').value;
+      this.user.password = this.formRegister.get('password').value;
+      this.onRegister();
+    }
+  }
+
+  ionViewWillEnter(){
+    this.formRegister.reset();
+  }
+
+  hasError: any = (controlName: string, errorName: string) => {
+		return !this.formRegister.controls[controlName].valid &&
+			this.formRegister.controls[controlName].hasError(errorName) &&
+			this.formRegister.controls[controlName].touched;
+	}
+
 
   
   onError() {
