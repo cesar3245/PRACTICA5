@@ -12,6 +12,33 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'main',
+    children:[
+      {
+        path: 'presupuesto',
+        loadChildren: () => import('./presupuesto/presupuesto.module').then( m => m.PresupuestoPageModule),
+        canActivate: [RutasActivasGuard]
+      },
+      {
+        path: 'alumnos',
+        loadChildren: () => import('./alumnos/alumnos.module').then( m => m.AlumnosPageModule)
+      },
+      {
+        path: 'tabs',
+        loadChildren: () => import('./tabs/tabs.module').then( m => m.TabsPageModule)
+      },
+      {
+        path: 'destinos',
+        loadChildren: () => import('./destinos/destinos.module').then( m => m.DestinosPageModule)
+      },
+      {
+        path: 'admin',
+        loadChildren: () => import('./admin/admin.module').then( m => m.AdminPageModule)
+      }
+    ],
+    canActivate: [RutasActivasGuard]
+  },
+  {
     path: 'recetas',
     children: [
       {
@@ -38,25 +65,7 @@ const routes: Routes = [
   {
     path: 'signin',
     loadChildren: () => import('./signin/signin.module').then( m => m.SigninPageModule)
-  },
-  {
-    path: 'tabs',
-    loadChildren: () => import('./tabs/tabs.module').then( m => m.TabsPageModule)
-  },
-  {
-    path: 'presupuesto',
-    loadChildren: () => import('./presupuesto/presupuesto.module').then( m => m.PresupuestoPageModule)
-  },
-  {
-    path: 'alumnos',
-    loadChildren: () => import('./alumnos/alumnos.module').then( m => m.AlumnosPageModule)
-  },
-  {
-    path: 'destinos',
-    loadChildren: () => import('./destinos/destinos.module').then( m => m.DestinosPageModule)
-  },
-
-    
+  }
   
 ];
 
