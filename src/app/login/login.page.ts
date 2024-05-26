@@ -7,7 +7,7 @@ import { AlertController } from '@ionic/angular';
 import { MenuService } from '../service/menu.service';
 import {FormGroup, FormBuilder, Validators, FormControl, AbstractControl} from '@angular/forms';
 import { LoadingController } from '@ionic/angular';
-
+import { StorageService } from '../service/storage.service';
 
 
 @Component({
@@ -19,6 +19,8 @@ export class LoginPage implements OnInit {
 
   user: User = new User();
   ionicForm: any;
+  usuario: any = {};
+
 
 
   constructor(
@@ -27,7 +29,9 @@ export class LoginPage implements OnInit {
     private menuService: MenuService,
     private alertCtrl: AlertController,
     private formBuilder: FormBuilder,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private storage : StorageService
+
 
 
   ) { }
@@ -49,6 +53,9 @@ export class LoginPage implements OnInit {
         console.log('Successfully logged in!');
         this.loadingController.dismiss();
         setTimeout(() => {
+          this.storage.setValue('usuario',
+          {nombre:'bgr nombre', direccion:'Jose Silvestre aramberri'});
+        this.getUsuario();
           this.menuService.setTitle("presupuesto");
           this.router.navigate(['main/presupuesto']);
         }, 650);
@@ -138,4 +145,14 @@ export class LoginPage implements OnInit {
     const { role, data } = await loading.onDidDismiss();
     console.log('Loading dismissed with role:', role);
   } 
+  getUsuario(){
+    this.storage.getValue('usuario').
+    then(user=>{
+      this.usuario = user;
+      console.info(this.usuario);
+    }).
+    catch(error=>{
+      console.error(error);
+    });
+  }
 }

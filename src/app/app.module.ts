@@ -18,12 +18,17 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { environment } from 'src/environments/environment';
 
 
+import { IonicStorageModule } from '@ionic/storage-angular';
+import { Drivers, Storage } from '@ionic/storage';
+
 @NgModule({
   declarations: [AppComponent, FloatMenuComponent],
-  imports: [BrowserModule, 
-            IonicModule.forRoot(), 
-            AppRoutingModule,
-           ],
+  imports: [HttpClientModule,BrowserModule, IonicModule.forRoot(), AppRoutingModule,
+    IonicStorageModule.forRoot({
+      name: '__mydb',
+      driverOrder: [ Drivers.LocalStorage]
+    })
+  ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
