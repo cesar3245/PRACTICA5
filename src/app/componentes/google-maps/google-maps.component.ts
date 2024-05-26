@@ -12,9 +12,9 @@ declare var google: any;
 })
 export class GoogleMapsComponent  implements OnInit {
   @Input() position : any = {
-    lat:  -2.889,
-    lng:  -78.899
-  }
+    lat:  25.7988334,
+    lng:  -100.3253184  
+    }
   
   label: any = {
     titulo: 'Ubicación',
@@ -25,7 +25,8 @@ export class GoogleMapsComponent  implements OnInit {
   marker: any;
   infowindow: any;
   positionSet: any;
-  
+  positionInicial = {};
+
   @ViewChild('map') divMap: any;
   
     constructor(
@@ -42,36 +43,37 @@ export class GoogleMapsComponent  implements OnInit {
     async inicializarGooglemaps(){
       this.googleMapsService.init(this.renderer, this.document).
       then(()=>{
-        this.initMap()
+        this.initMap();
       })
       .catch((error: any)=>{
         console.error(error);
       });
     }
-    initMap(){
-      const position = this.position;
+    async initMap(){
+      if(this.position.lng == 0 || this.position.lat == 0){
+        this.position ={
+          lat:  25.7988334,
+          lng:  -100.3253184
+        };
+      }
+      
+      let latLng = new google.maps.LatLng(this.position.lat, this.position.lng);
   
-      let latLng = new google.maps.LatLng(position.lat, position.lng);
-  
-      let mapOptions = {
-        center: latLng,
+      this.map = new google.maps.Map(this.divMap.nativeElement, {
+        mapId: "map",  
         zoom: 15,
-        disableDefaultUI: true,
-        clickableIcons: false
-      };
-  
-      this.map = new google.maps.Map(this.divMap.nativeElement, mapOptions);
-  
-      this.marker = new google.maps.Marker({
-        map: this.map,
-        animation: google.maps.Animation.DROP,
-        draggable: true
+        center: this.position
+      });
+      this.marker = new google.maps.marker.AdvancedMarkerView({
+      map: this.map,
+      position: this.position,
+      gmpDraggable: true
       });
   
-      this.clickHandEvent();
       this.infowindow = new google.maps.InfoWindow();
-      this.addMarker(position);
       this.setInfoWindow(this.marker, this.label.titulo, this.label.subtitulo);
+      this.clickHandEvent();
+
     }
     clickHandEvent(){
       this.map.addListener('click', (event: any)=>{
@@ -85,9 +87,10 @@ export class GoogleMapsComponent  implements OnInit {
   
     addMarker(position: any): void{
       let latLng = new google.maps.LatLng(position.lat, position.lng);
-      this.marker.setPosition(latLng);
-      this.map.panTo(position);
+      this.marker.position =latLng;
       this.positionSet = position;
+      this.map.panTo(position);
+
     }
   
     setInfoWindow(marker: any, titulo: string, subtitulo: string){

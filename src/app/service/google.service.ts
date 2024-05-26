@@ -38,7 +38,7 @@ export class GoogleService {
 
 
       if(this.apikey){
-        script.src = 'https://maps.googleapis.com/maps/api/js?key='+this.apikey+'&callback=mapInit';
+        script.src = 'https://maps.googleapis.com/maps/api/js?key='+this.apikey+'&region=MX&loading=async&callback=mapInit&v=beta&libraries=marker';
       } else{
         script.src = 'https://maps.googleapis.com/maps/api/js?callback=mapInit';
       }

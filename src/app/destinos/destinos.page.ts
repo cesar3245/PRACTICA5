@@ -85,6 +85,8 @@ export class DestinosPage implements OnInit {
   editarLugar(id: any, lugar: any) {
     this.editando = true;
     this.lugar = lugar;
+    this.latitud = lugar.latitud;
+    this.longitud = lugar.longitud;
     this.estado = "Editar el lugar";
     this.ionicForm.get('nombre').setValue(lugar.nombre);
   }
@@ -104,6 +106,8 @@ export class DestinosPage implements OnInit {
     this.editando = false;
     this.ionicForm.reset();
     this.lugar = new Lugar();
+    this.latitud = 0;
+    this.longitud = 0;
   }
   getPosition(): Promise<any> {
 		return new Promise((resolve: any, reject: any): any => {
@@ -122,14 +126,9 @@ export class DestinosPage implements OnInit {
 	} 
   async addDirection(){
     let positionInput: any = {
-      lat: -2.898116,
-      lng: -78.99958149999999
+      lat: this.editando? this.latitud:0,
+      lng: this.editando? this.longitud :0
     };
-    if(this.latitud !== null){
-      positionInput.lat = this.latitud;
-      positionInput.lng = this.longitud;
-    }
-
 
     const modalAdd = await this.modalController.create({
       component: GoogleMapsComponent,
